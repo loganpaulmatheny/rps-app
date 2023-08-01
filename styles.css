@@ -1,0 +1,70 @@
+* {
+ /* font info */
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+}
+
+.scoreboard {
+    display: flex;
+    flex-direction: column;
+}
+
+.game-area {
+    display: column;
+    flex-direction: column;
+}
+
+.user-input.play-inactive {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-input.play-active {
+    display: flex;
+    flex-direction: row;
+}
+
+h1 {
+
+}
+
+h2 {
+
+}
+
+h3 {
+
+}
+
+.icon {
+    /* emoji representing player */
+}
+
+.select-game {
+    /* box to select game*/
+}
+
+.cursor {
+    cursor: pointer;
+}
+
+.fighter {
+    /* fighter icon */
+}
+
+.mini-icon {
+    /* player icon after selection */
+}
+
+.change-game-button {
+    /* change game button */
+}
+
+.hidden {
+    display: none;
+}
+
+
