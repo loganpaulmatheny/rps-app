@@ -46,38 +46,48 @@ function checkWin(game) {
   // pull out the selections compare them
   var winner;
   console.log(game);
-  if (
-    game.selections.includes("rock") &&
-    game.selections.includes("scissors")
-  ) {
-    winner = game.selections.indexOf("rock");
-  } else if (
-    game.selections.includes("paper") &&
-    game.selections.includes("rock")
-  ) {
-    console.log(game.selections);
-    winner = game.selections.indexOf("paper");
-  } else if (
-    game.selections.includes("scissors") &&
-    game.selections.includes("paper")
-  ) {
-    winner = game.selections.indexOf("scissors");
+  var draw = checkDraw(game);
+  if (draw) {
+    console.log(`It's a draw!`);
+  } else {
+    if (
+      game.selections.includes("rock") &&
+      game.selections.includes("scissors")
+    ) {
+      winner = game.selections.indexOf("rock");
+    } else if (
+      game.selections.includes("paper") &&
+      game.selections.includes("rock")
+    ) {
+      console.log(game.selections);
+      winner = game.selections.indexOf("paper");
+    } else if (
+      game.selections.includes("scissors") &&
+      game.selections.includes("paper")
+    ) {
+      winner = game.selections.indexOf("scissors");
+    }
+    console.log(winner);
+    game.players[winner].wins += 1;
+    console.log(game.players);
+    console.log(`The winner is ${game.players[winner]}!`);
   }
-  console.log(winner);
-  game.players[winner].wins += 1;
-  console.log(game.players);
 }
 
-function checkDraw() {}
+function checkDraw(game) {
+  var item1 = game.selections[0];
+  for (let i = 0; i < game.selections.length; i++) {
+    if (item1 !== game.selections[i]) {
+      return false;
+    }
+  }
+  return true;
+}
 
 function reset() {}
 
 var player1 = createPlayer("Humanoid", "🤖");
 var player2 = createPlayer("Computer", "💻");
-var game = createGame([player1, player2], easy);
-var score = checkWin(game);
-var game = createGame([player1, player2], easy);
-var score = checkWin(game);
 var game = createGame([player1, player2], easy);
 var score = checkWin(game);
 var game = createGame([player1, player2], easy);
