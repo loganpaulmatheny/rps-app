@@ -1,0 +1,76 @@
+*  {
+ border: 1px solid green;
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.scoreboard {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+}
+
+#gameArea {
+    display: column;
+    flex-direction: column;
+    width: 60%;
+}
+
+.user-input.play-inactive {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-input.play-active {
+    display: flex;
+    flex-direction: row;
+}
+
+h1 {
+    color: red;
+}
+
+h2 {
+    color: green;
+}
+
+h3 {
+    color: blue;
+}
+
+.icon {
+    height: 20px;
+    width: 20px;}
+
+.select-game {
+    height: 50px;
+    width: 50px;
+}
+
+.cursor {
+    cursor: pointer;
+}
+
+.fighter {
+    height: 50px;
+    width: 50px;
+}
+
+.mini-icon {
+    height: 15px;
+    width: 15px;
+}
+
+.change-game-button {
+    border: 0
+}
+
+.hidden {
+    display: none;
+}
+
+
