@@ -1,20 +1,23 @@
-* {
- /* font info */
+*  {
+ border: 1px solid green;
 }
 
 .container{
     display: flex;
     flex-direction: row;
+    height: 100vh;
 }
 
 .scoreboard {
     display: flex;
     flex-direction: column;
+    width: 20%;
 }
 
-.game-area {
+#gameArea {
     display: column;
     flex-direction: column;
+    width: 60%;
 }
 
 .user-input.play-inactive {
@@ -28,23 +31,24 @@
 }
 
 h1 {
-
+    color: red;
 }
 
 h2 {
-
+    color: green;
 }
 
 h3 {
-
+    color: blue;
 }
 
 .icon {
-    /* emoji representing player */
-}
+    height: 20px;
+    width: 20px;}
 
 .select-game {
-    /* box to select game*/
+    height: 50px;
+    width: 50px;
 }
 
 .cursor {
@@ -52,15 +56,17 @@ h3 {
 }
 
 .fighter {
-    /* fighter icon */
+    height: 50px;
+    width: 50px;
 }
 
 .mini-icon {
-    /* player icon after selection */
+    height: 15px;
+    width: 15px;
 }
 
 .change-game-button {
-    /* change game button */
+    border: 0
 }
 
 .hidden {

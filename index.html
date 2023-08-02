@@ -5,25 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RPS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@1,700&family=Poppins:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
     <div class="container">
         <section id="p1Scoreboard" class="scoreboard">
-            <div id="p1Image"></div>
-            <div id="p1Name"></div>
-            <div id="p1Score"></div>
+            <div id="p1Icon">🐙</div>
+            <div id="p1Name">Human</div>
+            <div id="p1Score">Here is where wins will go</div>
         </section>
         <main id="gameArea">
-            <h1 id="gameTitle"></h1>
-            <h2 id="gameMessage"></h2>
+            <h1 id="gameTitle">rps</h1>
+            <h2 id="gameMessage">it's time to play!</h2>
             <div class=" user-input play-inactive">
-                <div id="gameEasy"
-                class="select-game"></div>
-                <div id="gameHard" class="select-game"></div>
+                <div id="gameEasy" class="select-game">Easy</div>
+                <div id="gameHard" class="select-game">Hard</div>
             </div>
         </main>
-        <section id="p2Scoreboard" class="scoreboard"></section>
+        <section id="p2Scoreboard" class="scoreboard">
+            <div id="p2Icon">💻</div>
+            <div id="p2Name">Computer</div>
+            <div id="p2Score">Here is where wins will go</div>
+        </section>
     </div>
 
 </body>
