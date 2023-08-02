@@ -14,18 +14,18 @@
     width: 20%;
 }
 
-#gameArea {
+.game-area {
     display: column;
     flex-direction: column;
     width: 60%;
 }
 
-.user-input.play-inactive {
+.user-input {
     display: flex;
     flex-direction: column;
 }
 
-.user-input.play-active {
+.game-play {
     display: flex;
     flex-direction: row;
 }
@@ -46,10 +46,9 @@ h3 {
     height: 20px;
     width: 20px;}
 
-.select-game {
-    height: 50px;
-    width: 50px;
-}
+/* .select-game {
+
+} */
 
 .cursor {
     cursor: pointer;
@@ -58,6 +57,11 @@ h3 {
 .fighter {
     height: 50px;
     width: 50px;
+}
+
+.fighter-avatar {
+    height: 25px;
+    width: 25px;
 }
 
 .mini-icon {
@@ -71,6 +75,4 @@ h3 {
 
 .hidden {
     display: none;
-}
-
-
+  }
