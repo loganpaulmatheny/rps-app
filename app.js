@@ -8,26 +8,33 @@ var changeGameButton = document.querySelector("#changeGame");
 
 // ===== DATA MODEL =====
 var gameIcons = [
-  [
-    {
-      name: "rock",
-      img: "happy-rock.png",
-    },
-    {
-      name: "paper",
-      img: "happy-paper.png",
-    },
-    {
-      name: "scissors",
-      img: "happy-scissors.png",
-    },
-  ],
+  {
+    name: "rock",
+    img: "happy-rock.png",
+  },
+  {
+    name: "paper",
+    img: "happy-paper.png",
+  },
+  {
+    name: "scissors",
+    img: "happy-scissors.png",
+  },
+  {
+    name: "barbie",
+    img: "barbie.png",
+  },
+  {
+    name: "indiana",
+    img: "indiana.png",
+  },
 ];
 
 var players = [];
 var playerTurn = 0;
 var round = 0;
 var easy = ["rock", "paper", "scissors"];
+var hard = ["rock", "paper", "scissors", "barbie", "indiana"];
 var currentGame;
 
 // ===== EVENT LISTENERS =====
@@ -81,7 +88,7 @@ function createGame(players, round, event) {
     if (levelSelection === "easy") {
       level = easy;
     } else if (levelSelection === "hard") {
-      // PUT HARD HERE LATER
+      level = hard;
     }
   } else {
     currentGame.selections = [];
@@ -240,10 +247,20 @@ function buildBoard(game) {
   changeGameButton.classList.toggle("hidden", false);
   // console.log(userInputArea);
   gamePlayArea.innerHTML = "";
+  var gameIconIndex;
   for (let i = 0; i < game.level.length; i++) {
+    for (let j = 0; j < gameIcons.length; j++) {
+      if (game.level[i] === gameIcons[j].name) {
+        gameIconIndex = j;
+      }
+    }
+    // gamePlayArea.innerHTML += `
+    // <div id="${game.level[i]}" class="fighter cursor">
+    // <img class="fighter-avatar" src="assets/happy-${game.level[i]}.png" alt="">
+    // </div>`;
     gamePlayArea.innerHTML += `
     <div id="${game.level[i]}" class="fighter cursor">
-    <img class="fighter-avatar" src="assets/happy-${game.level[i]}.png" alt="">
+    <img class="fighter-avatar" src="assets/${gameIcons[gameIconIndex].img}" alt="">
     </div>`;
   }
 }
