@@ -21,6 +21,8 @@ var gameIcons = [
 ];
 
 var players = [];
+var playerTurn = 0;
+var round = 0;
 var easy = ["rock", "paper", "scissors"];
 var currentGame;
 
@@ -37,12 +39,15 @@ window.addEventListener("load", function () {
 });
 
 userInputArea.addEventListener("click", function (event) {
-  createGame(players, event);
+  createGame(players, round, event);
   buildBoard(currentGame, event);
 });
 
 gamePlayArea.addEventListener("click", function (event) {
-  takeTurn(currentGame, event);
+  // takeTurn(event);
+  // takeTurn();
+  // checkWin(currentGame);
+  handleSelections(event);
 });
 
 // gamePlayArea.addEventListener()
@@ -59,41 +64,63 @@ function createPlayer(name, token) {
   return player;
 }
 
-function createGame(players, event) {
+function createGame(players, round, event) {
   // for (let i = 0; i < players.length; i++) {
   //   players[i].selection = selections[i];
   // }
-  var level;
-  var levelSelection = event.target.closest(".select-game").id;
-  if (levelSelection === "easy") {
-    level = easy;
+  if (round === 0) {
+    var level;
+    var levelSelection = event.target.closest(".select-game").id;
+    if (levelSelection === "easy") {
+      level = easy;
+    } else if (levelSelection === "hard") {
+      // PUT HARD HERE LATER
+    }
   } else {
-    // PUT HARD HERE LATER
+    currentGame.selections = [];
+    return currentGame;
   }
+
   var selections = [];
   currentGame = {
     players: players,
     selections: selections,
     level: level,
   };
-  console.log(currentGame);
+
   return currentGame;
 }
 
-function takeTurn(status, event) {
-  if (status === "human") {
+function takeTurn(event) {
+  // console.log(playerTurn);
+  var playerUp = currentGame.players[playerTurn].name;
+  // console.log(playerUp);
+  if (playerUp === "Humanoid") {
     var fighterSelection = event.target.closest(".fighter").id;
     console.log(fighterSelection);
+    currentGame.selections.push(fighterSelection);
+    // console.log(currentGame);
+    var selectedBy = event.target.closest(".fighter");
+    selectedBy.innerHTML += `<div class="mini-emoji">${currentGame.players[playerTurn].token}</div>`;
   } else {
-    console.log("human response");
+    var randomFighter = randomSelection();
+    console.log(randomFighter);
+    currentGame.selections.push(randomFighter);
+    var selectedBy = document.getElementById(`${randomFighter}`);
+    console.log(selectedBy);
+    selectedBy.innerHTML += `<div class="mini-emoji">${currentGame.players[playerTurn].token}</div>`;
   }
-  for (let i = 0; i < players.length; i++) {
-    // var input = prompt(`Please make your selection ${level}.`);
-    // console.log(`${players[i].name} has chosen ${input}`);
-    selections.push(input);
-  }
+  playerTurn += 1;
   console.log(currentGame);
-  return currentGame;
+  return playerTurn;
+  // DISPLAY WHO SELECTED ITEM HERE
+  // PAUSE for 3 seconds
+}
+
+function randomSelection() {
+  var randNum = Math.floor(Math.random() * currentGame.level.length);
+  var randomSelection = currentGame.level[randNum];
+  return randomSelection;
 }
 
 function checkWin(game) {
@@ -127,8 +154,9 @@ function checkWin(game) {
     }
     console.log(winner);
     game.players[winner].wins += 1;
-    console.log(game.players);
-    console.log(`The winner is ${game.players[winner]}!`);
+    console.log(`The winner is the ${game.players[winner].name}!`);
+    console.log(players);
+    round += 1;
   }
 }
 
@@ -142,7 +170,39 @@ function checkDraw(game) {
   return true;
 }
 
-function reset() {}
+function handleSelections(event) {
+  var readyToCheck = new Promise((resolve, reject) => {
+    let firstTurn = takeTurn(event);
+    if (firstTurn) {
+      resolve(
+        setTimeout(() => {
+          takeTurn();
+        }, 3000)
+      );
+    } else {
+      reject("Error");
+    }
+  });
+  readyToCheck
+    .then((prepResults) => {
+      prepResults;
+    })
+    .then(function () {
+      setTimeout(() => checkWin(currentGame), 4000);
+    })
+    .then(function () {
+      setTimeout(() => reset(), 4500);
+    })
+    .catch((prepResults) => {
+      prepResults;
+    });
+}
+
+function reset() {
+  playerTurn = 0;
+  buildBoard(currentGame);
+  createGame(currentGame, round);
+}
 
 function buildBoard(game) {
   userInputArea.classList.toggle("hidden", true);
@@ -152,7 +212,6 @@ function buildBoard(game) {
     gamePlayArea.innerHTML += `
   <div id="${game.level[i]}" class="fighter cursor">
     <img class="fighter-avatar" src="assets/happy-${game.level[i]}.png" alt="">
-    <div class="hidden mini-emoji">Emoji here</div>
   </div>`;
   }
 }
