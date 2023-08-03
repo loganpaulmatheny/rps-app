@@ -28,6 +28,7 @@
 .game-play {
     display: flex;
     flex-direction: row;
+    height: 100px
 }
 
 h1 {
