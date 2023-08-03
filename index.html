@@ -16,20 +16,33 @@
 <body>
     <div class="container">
         <section id="p1Scoreboard" class="scoreboard">
-            <div id="p1Icon">🐙</div>
+            <div id="p1Icon" class="icon">🐙</div>
             <div id="p1Name">Human</div>
             <div id="p1Score">Here is where wins will go</div>
         </section>
-        <main id="gameArea">
+        <main id="gameArea" class="game-area">
             <h1 id="gameTitle">rps</h1>
             <h2 id="gameMessage">it's time to play!</h2>
-            <div class=" user-input play-inactive">
-                <div id="gameEasy" class="select-game">Easy</div>
-                <div id="gameHard" class="select-game">Hard</div>
+            <div id="userInput" class="user-input">
+                <div id="easy" class="select-game cursor">
+                    <h3>Easy Version</h3>
+                    <p>Rock > Scissors</p>
+                    <p>Paper > Rock</p>
+                    <p>Scissors > Paper</p>
+                </div>
+                <div id="hard" class="select-game cursor">
+                    <h3>Hard</h3>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                </div>
+            </div>
+            <div id="gamePlay" class="game-play">
+                <!-- Game build will go here   -->
             </div>
         </main>
         <section id="p2Scoreboard" class="scoreboard">
-            <div id="p2Icon">💻</div>
+            <div id="p2Icon" class="icon">💻</div>
             <div id="p2Name">Computer</div>
             <div id="p2Score">Here is where wins will go</div>
         </section>
