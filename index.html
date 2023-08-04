@@ -16,9 +16,9 @@
 <body>
     <div class="container">
         <section id="scoreboard1" class="scoreboard">
-            <div id="icon1" class="icon">🐙</div>
-            <div id="name1">Human</div>
-            <div id="score1">Wins - 0 </div>
+            <div id="icon1" class="icon">🤖</div>
+            <div id="name1">Humanoid</div>
+            <div id="score1" class="score">Wins - 0 </div>
         </section>
         <main id="gameArea" class="game-area">
             <h1 id="gameTitle">rps</h1>
@@ -31,10 +31,14 @@
                     <p>Scissors > Paper</p>
                 </div>
                 <div id="hard" class="select-game cursor">
-                    <h3>Hard</h3>
-                    <p></p>
-                    <p></p>
-                    <p></p>
+                    <h3 id="hardTitle">Hard</h3>
+                    <p>Rock > Scissors</p>
+                    <p>Paper > Rock & Indiana Jones</p>
+                    <p>Scissors > Paper & Barbie</p>
+                    <p>Rock = Barbie & Indian Jones</p>
+                    <p>Indiana Jones > Scissors</p>
+                    <p>Barbie > Paper</p>
+                    <p>Barbie > Indiana Jones</p>
                 </div>
             </div>
             <div id="gamePlay" class="game-play">
@@ -45,7 +49,7 @@
         <section id="scoreboard2" class="scoreboard">
             <div id="icon2" class="icon">💻</div>
             <div id="name2">Computer</div>
-            <div id="score2">Wins - 0</div>
+            <div id="score2" class="score">Wins - 0</div>
         </section>
     </div>
     <script type="text/javascript" src="app.js"></script>

@@ -61,7 +61,9 @@ gamePlayArea.addEventListener("click", function (event) {
   handleSelections(event);
 });
 
-changeGameButton.addEventListener("click", changeGames);
+changeGameButton.addEventListener("click", function () {
+  changeGames();
+});
 
 // gamePlayArea.addEventListener()
 
@@ -115,7 +117,13 @@ function takeTurn(event) {
     currentGame.selections.push(fighterSelection);
     // console.log(currentGame);
     var selectedBy = event.target.closest(".fighter");
+    // console.log(selectedBy);
+    // var div = document.createElement("div");
+    // div.classList.add("mini-emoji");
+    // div.innerText = `${currentGame.players[playerTurn].token}`;
+    // selectedBy.appendChild(div);
     selectedBy.innerHTML += `<div class="mini-emoji">${currentGame.players[playerTurn].token}</div>`;
+    // console.log(selectedBy.childNodes);
   } else {
     var randomFighter = randomSelection();
     // console.log(randomFighter);
@@ -148,9 +156,17 @@ function checkWin(game) {
   var winner;
   // console.log(game);
   var draw = checkDraw(game);
-  if (draw) {
+  if (draw === true) {
     gameMessage.innerText = `It's a draw!`;
   } else {
+    if (game.level === hard) {
+      winner = hardLogic(game);
+      if (winner === true) {
+        gameMessage.innerText = `It's a draw!`;
+        round += 1;
+        return;
+      }
+    }
     // if (
     //   game.selections.includes("rock") &&
     //   game.selections.includes("scissors")
@@ -168,10 +184,8 @@ function checkWin(game) {
     //   winner = game.selections.indexOf("scissors");
     // }
     // console.log(winner);
-    if (game.level === easy) {
-      var winner = easyLogic(game);
-    } else if (game.level === hard) {
-      // PUT HARD LOGIC FUNCTION HERE
+    else if (game.level === easy) {
+      winner = easyLogic(game);
     }
     game.players[winner].wins += 1;
     gameMessage.innerText = `The winner is the ${game.players[winner].name}!`;
@@ -199,6 +213,46 @@ function easyLogic(game) {
   return winner;
 }
 
+function hardLogic(game) {
+  if (
+    game.selections.includes("rock") &&
+    game.selections.includes("scissors")
+  ) {
+    winner = game.selections.indexOf("rock");
+  } else if (
+    game.selections.includes("paper") &&
+    (game.selections.includes("rock") || game.selections.includes("indiana"))
+  ) {
+    winner = game.selections.indexOf("paper");
+  } else if (
+    game.selections.includes("scissors") &&
+    (game.selections.includes("paper") || game.selections.includes("barbie"))
+  ) {
+    winner = game.selections.indexOf("scissors");
+  } else if (
+    game.selections.includes("rock") &&
+    (game.selections.includes("indiana") || game.selections.includes("barbie"))
+  ) {
+    winner = true;
+  } else if (
+    game.selections.includes("indiana") &&
+    game.selections.includes("scissors")
+  ) {
+    winner = game.selections.indexOf("indiana");
+  } else if (
+    game.selections.includes("barbie") &&
+    game.selections.includes("paper")
+  ) {
+    winner = game.selections.indexOf("barbie");
+  } else if (
+    game.selections.includes("barbie") &&
+    game.selections.includes("indiana")
+  ) {
+    winner = game.selections.indexOf("barbie");
+  }
+  return winner;
+}
+
 function checkDraw(game) {
   var item1 = game.selections[0];
   for (let i = 0; i < game.selections.length; i++) {
@@ -210,34 +264,44 @@ function checkDraw(game) {
 }
 
 function handleSelections(event) {
-  var readyToCheck = new Promise((resolve, reject) => {
-    let firstTurn = takeTurn(event);
-    if (firstTurn) {
-      resolve(
-        setTimeout(() => {
-          takeTurn();
-        }, 2000)
-      );
-    } else {
-      reject("Error");
-    }
-  });
-  readyToCheck
-    .then((prepResults) => {
-      prepResults;
-    })
-    .then(function () {
-      setTimeout(() => checkWin(currentGame), 3000);
-    })
-    .then(function () {
-      setTimeout(() => updateScoreboards(), 3000);
-    })
-    .then(function () {
-      setTimeout(() => reset(), 5000);
-    })
-    .catch((prepResults) => {
-      prepResults;
-    });
+  takeTurn(event);
+  setTimeout(function () {
+    takeTurn();
+    checkWin(currentGame);
+    updateScoreboards();
+    setTimeout(() => {
+      reset();
+    }, 2000);
+  }, 1000);
+  // setTimeout(() => checkWin(currentGame), 3000);
+  // var readyToCheck = new Promise((resolve, reject) => {
+  // let firstTurn = takeTurn(event);
+  //   if (firstTurn) {
+  //     resolve(
+  //       setTimeout(() => {
+  //         takeTurn();
+  //       }, 2000)
+  //     );
+  //   } else {
+  //     reject("Error");
+  //   }
+  // });
+  // readyToCheck
+  //   .then((prepResults) => {
+  //     prepResults;
+  //   })
+  //   .then(function () {
+  //     setTimeout(() => checkWin(currentGame), 3000);
+  //   })
+  //   .then(function () {
+  //     setTimeout(() => updateScoreboards(), 3000);
+  //   })
+  //   .then(function () {
+  //     setTimeout(() => reset(), 5000);
+  //   })
+  //   .catch((prepResults) => {
+  //     prepResults;
+  //   });
 }
 
 function buildBoard(game) {
@@ -271,7 +335,9 @@ function updateScoreboards() {
 }
 
 function changeGames() {
-  console.log("clicked");
+  round = 0;
+  playerTurn = 0;
+  // console.log("clicked");
   showElement(userInputArea);
   hideElement(gamePlayArea);
 }
