@@ -1,5 +1,6 @@
 *  {
- border: 1px solid green;
+ font-family: 'Poppins', sans-serif;
+ /* border: #06d6a0 solid 1px; */
 }
 
 .container{
@@ -11,57 +12,107 @@
 .scoreboard {
     display: flex;
     flex-direction: column;
-    width: 20%;
+    align-items: center;
+    width: 25%;
+    font-weight: 500;
+    font-size: larger;
+    color: white;
+}
+
+#scoreboard1 {
+    /* background-color:linear-gradient(to-right, #ef476f, #ffd166); */
+    background-image: linear-gradient(to right, #ef476f , #ffd166);
+
+}
+
+#scoreboard2 {
+    /* background-color:linear-gradient(to-right, #ef476f, #ffd166); */
+    background-image: linear-gradient(to left, #ef476f , #ffd166);
+
+}
+
+.score {
+    margin-top: 20px;
 }
 
 .game-area {
-    display: column;
+    display: flex;
     flex-direction: column;
-    width: 60%;
+    align-items: center;
+    width: 50%;
+    background-color: #ffd166;
 }
 
 .user-input {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    width: 70%
+    
 }
 
 .game-play {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    height: 30%;
+    width: 90%;
+
 }
 
 h1 {
-    color: red;
+    color: #118ab2;
+    text-align: center;
 }
 
 h2 {
-    color: green;
+    color: #118ab2;
+    text-align: center;
 }
 
 h3 {
-    color: blue;
+    color: #06d6a0;
+    margin-bottom: 1px;
+}
+
+#hardTitle {
+    color: #c1121f
+}
+
+p {
+    margin: 0
 }
 
 .icon {
-    font-size: 40px;
+    font-size: 60px;
 }
 
-/* .select-game {
-
-} */
+.select-game {
+ width: 100%;
+ text-align: center;
+ background-color: white;
+ border: 3px solid #118ab2;
+ margin: 5px;
+ border-radius: 10px;
+}
 
 .cursor {
     cursor: pointer;
 }
 
 .fighter {
-    height: 50px;
-    width: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    width: 120px;
+    margin: 10px
 }
 
 .fighter-avatar {
-    height: 25px;
-    width: 25px;
+    height: 90%;
+    width: 90%;
 }
 
 .mini-icon {
@@ -70,6 +121,7 @@ h3 {
 
 .change-game-button {
     border: 0
+
 }
 
 .hidden {

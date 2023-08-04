@@ -1,29 +1,40 @@
 // ===== QUERY SELECTORS =====
+var gameMessage = document.querySelector("#gameMessage");
 var userInputArea = document.querySelector("#userInput");
 var gamePlayArea = document.querySelector("#gamePlay");
+var player1Score = document.querySelector("#score1");
+var player2Score = document.querySelector("#score2");
+var changeGameButton = document.querySelector("#changeGame");
 
 // ===== DATA MODEL =====
 var gameIcons = [
-  [
-    {
-      name: "rock",
-      img: "happy-rock.png",
-    },
-    {
-      name: "paper",
-      img: "happy-paper.png",
-    },
-    {
-      name: "scissors",
-      img: "happy-scissors.png",
-    },
-  ],
+  {
+    name: "rock",
+    img: "happy-rock.png",
+  },
+  {
+    name: "paper",
+    img: "happy-paper.png",
+  },
+  {
+    name: "scissors",
+    img: "happy-scissors.png",
+  },
+  {
+    name: "barbie",
+    img: "barbie.png",
+  },
+  {
+    name: "indiana",
+    img: "indiana.png",
+  },
 ];
 
 var players = [];
 var playerTurn = 0;
 var round = 0;
 var easy = ["rock", "paper", "scissors"];
+var hard = ["rock", "paper", "scissors", "barbie", "indiana"];
 var currentGame;
 
 // ===== EVENT LISTENERS =====
@@ -50,6 +61,10 @@ gamePlayArea.addEventListener("click", function (event) {
   handleSelections(event);
 });
 
+changeGameButton.addEventListener("click", function () {
+  changeGames();
+});
+
 // gamePlayArea.addEventListener()
 
 // ===== FUNCTIONS =====
@@ -68,13 +83,14 @@ function createGame(players, round, event) {
   // for (let i = 0; i < players.length; i++) {
   //   players[i].selection = selections[i];
   // }
+  gameMessage.innerText = "Choose your fighter!";
+  var level;
   if (round === 0) {
-    var level;
     var levelSelection = event.target.closest(".select-game").id;
     if (levelSelection === "easy") {
       level = easy;
     } else if (levelSelection === "hard") {
-      // PUT HARD HERE LATER
+      level = hard;
     }
   } else {
     currentGame.selections = [];
@@ -97,21 +113,27 @@ function takeTurn(event) {
   // console.log(playerUp);
   if (playerUp === "Humanoid") {
     var fighterSelection = event.target.closest(".fighter").id;
-    console.log(fighterSelection);
+    // console.log(fighterSelection);
     currentGame.selections.push(fighterSelection);
     // console.log(currentGame);
     var selectedBy = event.target.closest(".fighter");
+    // console.log(selectedBy);
+    // var div = document.createElement("div");
+    // div.classList.add("mini-emoji");
+    // div.innerText = `${currentGame.players[playerTurn].token}`;
+    // selectedBy.appendChild(div);
     selectedBy.innerHTML += `<div class="mini-emoji">${currentGame.players[playerTurn].token}</div>`;
+    // console.log(selectedBy.childNodes);
   } else {
     var randomFighter = randomSelection();
-    console.log(randomFighter);
+    // console.log(randomFighter);
     currentGame.selections.push(randomFighter);
     var selectedBy = document.getElementById(`${randomFighter}`);
-    console.log(selectedBy);
+    // console.log(selectedBy);
     selectedBy.innerHTML += `<div class="mini-emoji">${currentGame.players[playerTurn].token}</div>`;
   }
   playerTurn += 1;
-  console.log(currentGame);
+  // console.log(currentGame);
   return playerTurn;
   // DISPLAY WHO SELECTED ITEM HERE
   // PAUSE for 3 seconds
@@ -129,35 +151,106 @@ function checkWin(game) {
   // case whens?
   // only one circumstance where each wins -- if statements fine
   // pull out the selections compare them
+
+  // ======= WHAT LEVEL DO WE NEED TO CHECK ======
   var winner;
-  console.log(game);
+  // console.log(game);
   var draw = checkDraw(game);
-  if (draw) {
-    console.log(`It's a draw!`);
+  if (draw === true) {
+    gameMessage.innerText = `It's a draw!`;
   } else {
-    if (
-      game.selections.includes("rock") &&
-      game.selections.includes("scissors")
-    ) {
-      winner = game.selections.indexOf("rock");
-    } else if (
-      game.selections.includes("paper") &&
-      game.selections.includes("rock")
-    ) {
-      console.log(game.selections);
-      winner = game.selections.indexOf("paper");
-    } else if (
-      game.selections.includes("scissors") &&
-      game.selections.includes("paper")
-    ) {
-      winner = game.selections.indexOf("scissors");
+    if (game.level === hard) {
+      winner = hardLogic(game);
+      if (winner === true) {
+        gameMessage.innerText = `It's a draw!`;
+        round += 1;
+        return;
+      }
     }
-    console.log(winner);
+    // if (
+    //   game.selections.includes("rock") &&
+    //   game.selections.includes("scissors")
+    // ) {
+    //   winner = game.selections.indexOf("rock");
+    // } else if (
+    //   game.selections.includes("paper") &&
+    //   game.selections.includes("rock")
+    // ) {
+    //   winner = game.selections.indexOf("paper");
+    // } else if (
+    //   game.selections.includes("scissors") &&
+    //   game.selections.includes("paper")
+    // ) {
+    //   winner = game.selections.indexOf("scissors");
+    // }
+    // console.log(winner);
+    else if (game.level === easy) {
+      winner = easyLogic(game);
+    }
     game.players[winner].wins += 1;
-    console.log(`The winner is the ${game.players[winner].name}!`);
-    console.log(players);
-    round += 1;
+    gameMessage.innerText = `The winner is the ${game.players[winner].name}!`;
   }
+  round += 1;
+}
+
+function easyLogic(game) {
+  if (
+    game.selections.includes("rock") &&
+    game.selections.includes("scissors")
+  ) {
+    winner = game.selections.indexOf("rock");
+  } else if (
+    game.selections.includes("paper") &&
+    game.selections.includes("rock")
+  ) {
+    winner = game.selections.indexOf("paper");
+  } else if (
+    game.selections.includes("scissors") &&
+    game.selections.includes("paper")
+  ) {
+    winner = game.selections.indexOf("scissors");
+  }
+  return winner;
+}
+
+function hardLogic(game) {
+  if (
+    game.selections.includes("rock") &&
+    game.selections.includes("scissors")
+  ) {
+    winner = game.selections.indexOf("rock");
+  } else if (
+    game.selections.includes("paper") &&
+    (game.selections.includes("rock") || game.selections.includes("indiana"))
+  ) {
+    winner = game.selections.indexOf("paper");
+  } else if (
+    game.selections.includes("scissors") &&
+    (game.selections.includes("paper") || game.selections.includes("barbie"))
+  ) {
+    winner = game.selections.indexOf("scissors");
+  } else if (
+    game.selections.includes("rock") &&
+    (game.selections.includes("indiana") || game.selections.includes("barbie"))
+  ) {
+    winner = true;
+  } else if (
+    game.selections.includes("indiana") &&
+    game.selections.includes("scissors")
+  ) {
+    winner = game.selections.indexOf("indiana");
+  } else if (
+    game.selections.includes("barbie") &&
+    game.selections.includes("paper")
+  ) {
+    winner = game.selections.indexOf("barbie");
+  } else if (
+    game.selections.includes("barbie") &&
+    game.selections.includes("indiana")
+  ) {
+    winner = game.selections.indexOf("barbie");
+  }
+  return winner;
 }
 
 function checkDraw(game) {
@@ -171,31 +264,82 @@ function checkDraw(game) {
 }
 
 function handleSelections(event) {
-  var readyToCheck = new Promise((resolve, reject) => {
-    let firstTurn = takeTurn(event);
-    if (firstTurn) {
-      resolve(
-        setTimeout(() => {
-          takeTurn();
-        }, 3000)
-      );
-    } else {
-      reject("Error");
+  takeTurn(event);
+  setTimeout(function () {
+    takeTurn();
+    checkWin(currentGame);
+    updateScoreboards();
+    setTimeout(() => {
+      reset();
+    }, 2000);
+  }, 1000);
+  // setTimeout(() => checkWin(currentGame), 3000);
+  // var readyToCheck = new Promise((resolve, reject) => {
+  // let firstTurn = takeTurn(event);
+  //   if (firstTurn) {
+  //     resolve(
+  //       setTimeout(() => {
+  //         takeTurn();
+  //       }, 2000)
+  //     );
+  //   } else {
+  //     reject("Error");
+  //   }
+  // });
+  // readyToCheck
+  //   .then((prepResults) => {
+  //     prepResults;
+  //   })
+  //   .then(function () {
+  //     setTimeout(() => checkWin(currentGame), 3000);
+  //   })
+  //   .then(function () {
+  //     setTimeout(() => updateScoreboards(), 3000);
+  //   })
+  //   .then(function () {
+  //     setTimeout(() => reset(), 5000);
+  //   })
+  //   .catch((prepResults) => {
+  //     prepResults;
+  //   });
+}
+
+function buildBoard(game) {
+  showElement(gamePlayArea);
+  hideElement(userInputArea);
+  showElement(changeGameButton);
+  changeGameButton.classList.toggle("hidden", false);
+  // console.log(userInputArea);
+  gamePlayArea.innerHTML = "";
+  var gameIconIndex;
+  for (let i = 0; i < game.level.length; i++) {
+    for (let j = 0; j < gameIcons.length; j++) {
+      if (game.level[i] === gameIcons[j].name) {
+        gameIconIndex = j;
+      }
     }
-  });
-  readyToCheck
-    .then((prepResults) => {
-      prepResults;
-    })
-    .then(function () {
-      setTimeout(() => checkWin(currentGame), 4000);
-    })
-    .then(function () {
-      setTimeout(() => reset(), 4500);
-    })
-    .catch((prepResults) => {
-      prepResults;
-    });
+    // gamePlayArea.innerHTML += `
+    // <div id="${game.level[i]}" class="fighter cursor">
+    // <img class="fighter-avatar" src="assets/happy-${game.level[i]}.png" alt="">
+    // </div>`;
+    gamePlayArea.innerHTML += `
+    <div id="${game.level[i]}" class="fighter cursor">
+    <img class="fighter-avatar" src="assets/${gameIcons[gameIconIndex].img}" alt="">
+    </div>`;
+  }
+}
+
+function updateScoreboards() {
+  player1Score.innerText = `Wins - ${players[0].wins}`;
+  player2Score.innerText = `Wins - ${players[1].wins}`;
+}
+
+function changeGames() {
+  round = 0;
+  playerTurn = 0;
+  // console.log("clicked");
+  showElement(userInputArea);
+  hideElement(gamePlayArea);
 }
 
 function reset() {
@@ -204,14 +348,10 @@ function reset() {
   createGame(currentGame, round);
 }
 
-function buildBoard(game) {
-  userInputArea.classList.toggle("hidden", true);
-  console.log(userInputArea);
-  gamePlayArea.innerHTML = "";
-  for (let i = 0; i < game.level.length; i++) {
-    gamePlayArea.innerHTML += `
-  <div id="${game.level[i]}" class="fighter cursor">
-    <img class="fighter-avatar" src="assets/happy-${game.level[i]}.png" alt="">
-  </div>`;
-  }
+function hideElement(selector) {
+  selector.classList.toggle("hidden", true);
+}
+
+function showElement(selector) {
+  selector.classList.toggle("hidden", false);
 }
