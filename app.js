@@ -41,12 +41,6 @@ var currentGame;
 window.addEventListener("load", function () {
   var player1 = createPlayer("Humanoid", "🤖");
   var player2 = createPlayer("Computer", "💻");
-
-  // var score = checkWin(game);
-  // var game = createGame([player1, player2], easy);
-  // var score = checkWin(game);
-  // var game = createGame([player1, player2], easy);
-  // var score = checkWin(game);
 });
 
 userInputArea.addEventListener("click", function (event) {
@@ -55,17 +49,12 @@ userInputArea.addEventListener("click", function (event) {
 });
 
 gamePlayArea.addEventListener("click", function (event) {
-  // takeTurn(event);
-  // takeTurn();
-  // checkWin(currentGame);
   handleSelections(event);
 });
 
 changeGameButton.addEventListener("click", function () {
   changeGames();
 });
-
-// gamePlayArea.addEventListener()
 
 // ===== FUNCTIONS =====
 
@@ -80,9 +69,6 @@ function createPlayer(name, token) {
 }
 
 function createGame(players, round, event) {
-  // for (let i = 0; i < players.length; i++) {
-  //   players[i].selection = selections[i];
-  // }
   gameMessage.innerText = "Choose your fighter!";
   var level;
   if (round === 0) {
@@ -108,35 +94,20 @@ function createGame(players, round, event) {
 }
 
 function takeTurn(event) {
-  // console.log(playerTurn);
   var playerUp = currentGame.players[playerTurn].name;
-  // console.log(playerUp);
   if (playerUp === "Humanoid") {
     var fighterSelection = event.target.closest(".fighter").id;
-    // console.log(fighterSelection);
     currentGame.selections.push(fighterSelection);
-    // console.log(currentGame);
     var selectedBy = event.target.closest(".fighter");
-    // console.log(selectedBy);
-    // var div = document.createElement("div");
-    // div.classList.add("mini-emoji");
-    // div.innerText = `${currentGame.players[playerTurn].token}`;
-    // selectedBy.appendChild(div);
     selectedBy.innerHTML += `<div class="mini-emoji">${currentGame.players[playerTurn].token}</div>`;
-    // console.log(selectedBy.childNodes);
   } else {
     var randomFighter = randomSelection();
-    // console.log(randomFighter);
     currentGame.selections.push(randomFighter);
     var selectedBy = document.getElementById(`${randomFighter}`);
-    // console.log(selectedBy);
     selectedBy.innerHTML += `<div class="mini-emoji">${currentGame.players[playerTurn].token}</div>`;
   }
   playerTurn += 1;
-  // console.log(currentGame);
   return playerTurn;
-  // DISPLAY WHO SELECTED ITEM HERE
-  // PAUSE for 3 seconds
 }
 
 function randomSelection() {
@@ -146,15 +117,7 @@ function randomSelection() {
 }
 
 function checkWin(game) {
-  // GOAL - return position of the winner
-  // what does the logic need to be?
-  // case whens?
-  // only one circumstance where each wins -- if statements fine
-  // pull out the selections compare them
-
-  // ======= WHAT LEVEL DO WE NEED TO CHECK ======
   var winner;
-  // console.log(game);
   var draw = checkDraw(game);
   if (draw === true) {
     gameMessage.innerText = `It's a draw!`;
@@ -166,25 +129,7 @@ function checkWin(game) {
         round += 1;
         return;
       }
-    }
-    // if (
-    //   game.selections.includes("rock") &&
-    //   game.selections.includes("scissors")
-    // ) {
-    //   winner = game.selections.indexOf("rock");
-    // } else if (
-    //   game.selections.includes("paper") &&
-    //   game.selections.includes("rock")
-    // ) {
-    //   winner = game.selections.indexOf("paper");
-    // } else if (
-    //   game.selections.includes("scissors") &&
-    //   game.selections.includes("paper")
-    // ) {
-    //   winner = game.selections.indexOf("scissors");
-    // }
-    // console.log(winner);
-    else if (game.level === easy) {
+    } else if (game.level === easy) {
       winner = easyLogic(game);
     }
     game.players[winner].wins += 1;
@@ -273,35 +218,6 @@ function handleSelections(event) {
       reset();
     }, 2000);
   }, 1000);
-  // setTimeout(() => checkWin(currentGame), 3000);
-  // var readyToCheck = new Promise((resolve, reject) => {
-  // let firstTurn = takeTurn(event);
-  //   if (firstTurn) {
-  //     resolve(
-  //       setTimeout(() => {
-  //         takeTurn();
-  //       }, 2000)
-  //     );
-  //   } else {
-  //     reject("Error");
-  //   }
-  // });
-  // readyToCheck
-  //   .then((prepResults) => {
-  //     prepResults;
-  //   })
-  //   .then(function () {
-  //     setTimeout(() => checkWin(currentGame), 3000);
-  //   })
-  //   .then(function () {
-  //     setTimeout(() => updateScoreboards(), 3000);
-  //   })
-  //   .then(function () {
-  //     setTimeout(() => reset(), 5000);
-  //   })
-  //   .catch((prepResults) => {
-  //     prepResults;
-  //   });
 }
 
 function buildBoard(game) {
@@ -309,7 +225,6 @@ function buildBoard(game) {
   hideElement(userInputArea);
   showElement(changeGameButton);
   changeGameButton.classList.toggle("hidden", false);
-  // console.log(userInputArea);
   gamePlayArea.innerHTML = "";
   var gameIconIndex;
   for (let i = 0; i < game.level.length; i++) {
@@ -318,10 +233,6 @@ function buildBoard(game) {
         gameIconIndex = j;
       }
     }
-    // gamePlayArea.innerHTML += `
-    // <div id="${game.level[i]}" class="fighter cursor">
-    // <img class="fighter-avatar" src="assets/happy-${game.level[i]}.png" alt="">
-    // </div>`;
     gamePlayArea.innerHTML += `
     <div id="${game.level[i]}" class="fighter cursor">
     <img class="fighter-avatar" src="assets/${gameIcons[gameIconIndex].img}" alt="">
@@ -337,7 +248,6 @@ function updateScoreboards() {
 function changeGames() {
   round = 0;
   playerTurn = 0;
-  // console.log("clicked");
   showElement(userInputArea);
   hideElement(gamePlayArea);
 }
