@@ -15,22 +15,22 @@
 
 <body>
     <div class="container">
-        <section id="scoreboard1" class="scoreboard">
-            <div id="icon1" class="icon">🤖</div>
-            <div id="name1">Humanoid</div>
-            <div id="score1" class="score">Wins - 0 </div>
+        <section id="scoreboard1" class="scoreboard scoreboard1">
+            <p id="icon1" class="icon">🤖</p>
+            <p id="name1">Humanoid</p>
+            <p id="score1" class="score">Wins - 0 </p>
         </section>
         <main id="gameArea" class="game-area">
             <h1 id="gameTitle">rps</h1>
             <h2 id="gameMessage">Select your game!</h2>
             <div id="userInput" class="user-input">
-                <div id="easy" class="select-game cursor">
+                <section id="easy" class="select-game cursor">
                     <h3>Easy Version</h3>
                     <p>Rock > Scissors</p>
                     <p>Paper > Rock</p>
                     <p>Scissors > Paper</p>
-                </div>
-                <div id="hard" class="select-game cursor">
+                </section>
+                <section id="hard" class="select-game cursor">
                     <h3 id="hardTitle">Hard</h3>
                     <p>Rock > Scissors</p>
                     <p>Paper > Rock & Indiana Jones</p>
@@ -39,17 +39,17 @@
                     <p>Indiana Jones > Scissors</p>
                     <p>Barbie > Paper</p>
                     <p>Barbie > Indiana Jones</p>
-                </div>
+                </section>
             </div>
-            <div id="gamePlay" class="game-play">
+            <section id="gamePlay" class="game-play">
                 <!-- Game build will go here   -->
-            </div>
-            <button id="changeGame" class="hidden">Change Game</button>
+            </section>
+            <button id="changeGame" class="hidden cursor">Change Game</button>
         </main>
-        <section id="scoreboard2" class="scoreboard">
-            <div id="icon2" class="icon">💻</div>
-            <div id="name2">Computer</div>
-            <div id="score2" class="score">Wins - 0</div>
+        <section id="scoreboard2" class="scoreboard scoreboard2">
+            <p id="icon2" class="icon">💻</p>
+            <p id="name2">Computer</p>
+            <p id="score2" class="score">Wins - 0</p>
         </section>
     </div>
     <script type="text/javascript" src="app.js"></script>
