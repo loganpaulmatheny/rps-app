@@ -23,7 +23,7 @@ Option 3:
 
 ## Preview:
 
-![](https://github.com/loganpaulmatheny/rps-app/blob/main/assets/rps_short.mov)
+![](https://github.com/loganpaulmatheny/rps-app/blob/main/assets/rps_short.gif)
 
 ## Overview:
 
@@ -41,12 +41,12 @@ Option 3:
 
 ### Wins
 
-- Finished project ahead of schedule and spent time refactoring as well as updating CSS layout
-- Minimized
+- Finished project ahead of schedule and spent additional time refactoring as well as updating CSS layout
+- Minimized repetitive code and nested if statements
+- Used minimal global variables representing the data model
 
 ### Challenges
 
-- Attempts to 'stop' function calls until prior function is complete (JS is an asynchronous language and this is not possible)
--
-
-https://ben-rosner-williamsburg.github.io/coloRandom/
+- Attempts to 'stop' function calls until prior function is complete (JS is an asynchronous language and this is not possible) were unsuccessful - instead a simple setTimeout method were used
+- Added 'draw' criteria for game logic beyond if two selections are the same for additional challenge (e.g. rock vs. barbie or indian jones)
+- Changed background and styling when 'hard mode' is selected
