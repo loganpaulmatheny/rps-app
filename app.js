@@ -148,14 +148,14 @@ function checkWin(game) {
 
 function checkDraw(game) {
   var item1 = game.selections[0];
+  if (hardLogic(game) === false) {
+    gameMessage.innerText = `It's a draw!`;
+    return true;
+  }
   for (let i = 0; i < game.selections.length; i++) {
     if (item1 !== game.selections[i]) {
       return false;
     }
-  }
-  if (hardLogic(game) === false) {
-    gameMessage.innerText = `It's a draw!`;
-    return true;
   }
   return true;
 }
