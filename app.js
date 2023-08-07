@@ -72,12 +72,7 @@ function createGame(players, round, event) {
   gameMessage.innerText = "Choose your fighter!";
   var level;
   if (round === 0) {
-    var levelSelection = event.target.closest(".select-game").id;
-    if (levelSelection === "easy") {
-      level = easy;
-    } else if (levelSelection === "hard") {
-      level = hard;
-    }
+    var level = determineLevel(event);
   } else {
     currentGame.selections = [];
     return currentGame;
@@ -91,6 +86,16 @@ function createGame(players, round, event) {
   };
 
   return currentGame;
+}
+
+function determineLevel(event) {
+  var levelSelection = event.target.closest(".select-game").id;
+  if (levelSelection === "easy") {
+    level = easy;
+  } else if (levelSelection === "hard") {
+    level = hard;
+  }
+  return level;
 }
 
 function takeTurn(event) {
@@ -116,26 +121,80 @@ function randomSelection() {
   return randomSelection;
 }
 
-function checkWin(game) {
+// function checkWin(game) {
+//   var winner;
+//   var draw = checkDraw(game);
+//   if (draw === true) {
+//     gameMessage.innerText = `It's a draw!`;
+//   } else {
+//     if (game.level === hard) {
+//       winner = hardLogic(game);
+//       if (winner === true) {
+//         gameMessage.innerText = `It's a draw!`;
+//         round += 1;
+//         return;
+//       }
+//     } else if (game.level === easy) {
+//       winner = easyLogic(game);
+//     }
+//     game.players[winner].wins += 1;
+//     gameMessage.innerText = `The winner is the ${game.players[winner].name}!`;
+//   }
+//   round += 1;
+// }
+
+// function checkWin(game) {
+//   var winner;
+//   var draw = checkDraw(game);
+//   if (draw === true) {
+//     gameMessage.innerText = `It's a draw!`;
+//   } else {
+//     if (game.level === hard) {
+//       winner = hardLogic(game);
+//     } else if (game.level === easy) {
+//       winner = easyLogic(game);
+//     }
+//     game.players[winner].wins += 1;
+//     gameMessage.innerText = `The winner is the ${game.players[winner].name}!`;
+//   }
+//   round += 1;
+// }
+
+function executeWin(game) {
   var winner;
   var draw = checkDraw(game);
   if (draw === true) {
     gameMessage.innerText = `It's a draw!`;
   } else {
-    if (game.level === hard) {
-      winner = hardLogic(game);
-      if (winner === true) {
-        gameMessage.innerText = `It's a draw!`;
-        round += 1;
-        return;
-      }
-    } else if (game.level === easy) {
-      winner = easyLogic(game);
-    }
+    winner = checkWin(game);
     game.players[winner].wins += 1;
     gameMessage.innerText = `The winner is the ${game.players[winner].name}!`;
   }
   round += 1;
+}
+
+function checkWin(game) {
+  var winner;
+  if (game.level === hard) {
+    winner = hardLogic(game);
+  } else if (game.level === easy) {
+    winner = easyLogic(game);
+  }
+  return winner;
+}
+
+function checkDraw(game) {
+  var item1 = game.selections[0];
+  for (let i = 0; i < game.selections.length; i++) {
+    if (item1 !== game.selections[i]) {
+      return false;
+    }
+  }
+  if (hardLogic(game) === false) {
+    gameMessage.innerText = `It's a draw!`;
+    return true;
+  }
+  return true;
 }
 
 function easyLogic(game) {
@@ -178,7 +237,8 @@ function hardLogic(game) {
     game.selections.includes("rock") &&
     (game.selections.includes("indiana") || game.selections.includes("barbie"))
   ) {
-    winner = true;
+    // winner = true;
+    winner = false;
   } else if (
     game.selections.includes("indiana") &&
     game.selections.includes("scissors")
@@ -198,21 +258,11 @@ function hardLogic(game) {
   return winner;
 }
 
-function checkDraw(game) {
-  var item1 = game.selections[0];
-  for (let i = 0; i < game.selections.length; i++) {
-    if (item1 !== game.selections[i]) {
-      return false;
-    }
-  }
-  return true;
-}
-
 function handleSelections(event) {
   takeTurn(event);
   setTimeout(function () {
     takeTurn();
-    checkWin(currentGame);
+    executeWin(currentGame);
     updateScoreboards();
     setTimeout(() => {
       reset();
