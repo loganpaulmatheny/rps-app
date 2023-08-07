@@ -5,6 +5,7 @@ var gamePlayArea = document.querySelector("#gamePlay");
 var player1Score = document.querySelector("#score1");
 var player2Score = document.querySelector("#score2");
 var changeGameButton = document.querySelector("#changeGame");
+var wholeGameArea = document.querySelector(".container");
 
 // ===== DATA MODEL =====
 var gameIcons = [
@@ -121,45 +122,6 @@ function randomSelection() {
   return randomSelection;
 }
 
-// function checkWin(game) {
-//   var winner;
-//   var draw = checkDraw(game);
-//   if (draw === true) {
-//     gameMessage.innerText = `It's a draw!`;
-//   } else {
-//     if (game.level === hard) {
-//       winner = hardLogic(game);
-//       if (winner === true) {
-//         gameMessage.innerText = `It's a draw!`;
-//         round += 1;
-//         return;
-//       }
-//     } else if (game.level === easy) {
-//       winner = easyLogic(game);
-//     }
-//     game.players[winner].wins += 1;
-//     gameMessage.innerText = `The winner is the ${game.players[winner].name}!`;
-//   }
-//   round += 1;
-// }
-
-// function checkWin(game) {
-//   var winner;
-//   var draw = checkDraw(game);
-//   if (draw === true) {
-//     gameMessage.innerText = `It's a draw!`;
-//   } else {
-//     if (game.level === hard) {
-//       winner = hardLogic(game);
-//     } else if (game.level === easy) {
-//       winner = easyLogic(game);
-//     }
-//     game.players[winner].wins += 1;
-//     gameMessage.innerText = `The winner is the ${game.players[winner].name}!`;
-//   }
-//   round += 1;
-// }
-
 function executeWin(game) {
   var winner;
   var draw = checkDraw(game);
@@ -218,6 +180,7 @@ function easyLogic(game) {
 }
 
 function hardLogic(game) {
+  var winner;
   if (
     game.selections.includes("rock") &&
     game.selections.includes("scissors")
@@ -237,7 +200,6 @@ function hardLogic(game) {
     game.selections.includes("rock") &&
     (game.selections.includes("indiana") || game.selections.includes("barbie"))
   ) {
-    // winner = true;
     winner = false;
   } else if (
     game.selections.includes("indiana") &&
@@ -288,6 +250,9 @@ function buildBoard(game) {
     <img class="fighter-avatar" src="assets/${gameIcons[gameIconIndex].img}" alt="">
     </div>`;
   }
+  if (game.level === hard) {
+    wholeGameArea.classList.add("parent", "hard");
+  }
 }
 
 function updateScoreboards() {
@@ -298,6 +263,7 @@ function updateScoreboards() {
 function changeGames() {
   round = 0;
   playerTurn = 0;
+  wholeGameArea.classList.remove("parent", "hard");
   showElement(userInputArea);
   hideElement(gamePlayArea);
 }
