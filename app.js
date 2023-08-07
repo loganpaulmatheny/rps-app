@@ -6,6 +6,7 @@ var player1Score = document.querySelector("#score1");
 var player2Score = document.querySelector("#score2");
 var changeGameButton = document.querySelector("#changeGame");
 var wholeGameArea = document.querySelector(".container");
+var gameTitle = document.querySelector("#gameTitle");
 
 // ===== DATA MODEL =====
 var gameIcons = [
@@ -34,9 +35,9 @@ var gameIcons = [
 var players = [];
 var playerTurn = 0;
 var round = 0;
+var currentGame;
 var easy = ["rock", "paper", "scissors"];
 var hard = ["rock", "paper", "scissors", "barbie", "indiana"];
-var currentGame;
 
 // ===== EVENT LISTENERS =====
 window.addEventListener("load", function () {
@@ -105,12 +106,12 @@ function takeTurn(event) {
     var fighterSelection = event.target.closest(".fighter").id;
     currentGame.selections.push(fighterSelection);
     var selectedBy = event.target.closest(".fighter");
-    selectedBy.innerHTML += `<div class="mini-emoji">${currentGame.players[playerTurn].token}</div>`;
+    selectedBy.innerHTML += `<div class="mini-emoji" style="background:white; border-radius: 5px; margin-top: 5px">${currentGame.players[playerTurn].token}</div>`;
   } else {
     var randomFighter = randomSelection();
     currentGame.selections.push(randomFighter);
     var selectedBy = document.getElementById(`${randomFighter}`);
-    selectedBy.innerHTML += `<div class="mini-emoji">${currentGame.players[playerTurn].token}</div>`;
+    selectedBy.innerHTML += `<div class="mini-emoji" style="background:white; border-radius: 5px; margin-top: 5px">${currentGame.players[playerTurn].token}</div>`;
   }
   playerTurn += 1;
   return playerTurn;
@@ -252,6 +253,7 @@ function buildBoard(game) {
   }
   if (game.level === hard) {
     wholeGameArea.classList.add("parent", "hard");
+    gameTitle.innerText = "🔥🔥🔥 rps 🔥🔥🔥";
   }
 }
 
@@ -264,6 +266,7 @@ function changeGames() {
   round = 0;
   playerTurn = 0;
   wholeGameArea.classList.remove("parent", "hard");
+  gameTitle.innerText = "rps";
   showElement(userInputArea);
   hideElement(gamePlayArea);
 }
