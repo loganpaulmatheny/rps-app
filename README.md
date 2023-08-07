@@ -13,7 +13,7 @@ Option 1:
 Option 2:
 
 1. Download a zip file
-2. Navigate to the correct directory in your terminal and use the command open `index.html` to load the application into your default browser.
+2. Navigate to the correct directory in your terminal and use the command `open index.html` to load the application into your default browser.
 
 Option 3:
 
